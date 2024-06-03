@@ -12,9 +12,16 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [loginError, setLoginError] = useState(false);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (email !== 'correct email' || password !== 'correct password') {
+            setLoginError(true);
+        } else {
+            setLoginError(false);
+        }
         const response = await fetch('https://controledeestoqueapi.azurewebsites.net/api/Auth/login', {
             method: 'POST',
             headers: {
@@ -100,7 +107,7 @@ const Login = () => {
                                 Manter conectado</label>
                             <a href="#">Esqueceu sua senha?</a>
                         </div>
-
+                        {loginError && <p style={{ color: 'red', padding: 2 }}>E-mail ou senha incorreta</p>}
                         <button type="submit">Login</button>
 
                         <div className="register-link">
@@ -133,6 +140,7 @@ const Login = () => {
                         <div className="input-box">
                             <input type="password" placeholder="Confirme sua senha" required value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
                             <FaLock className="icon" />
+                            <p style={{ fontSize: 10 }}>A senha deve possuir caractere especial, numero, maiuscula e minuscula</p>
                         </div>
                         <div className="remember-forgot">
                             <label><input type="checkbox" required />
