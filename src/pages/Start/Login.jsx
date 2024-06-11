@@ -17,21 +17,19 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (email !== 'correct email' || password !== 'correct password') {
-            setLoginError(true);
-        } else {
-            setLoginError(false);
-        }
+
         const response = await fetch('https://controledeestoqueapi.azurewebsites.net/api/Auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email, password })
+
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            setLoginError(`ERRO HTTP status: ${response.status}`);
+            throw new Error(`ERRO HTTP status: ${response.status}`);
         }
         const data = await response.json();
 
@@ -39,11 +37,12 @@ const Login = () => {
 
             localStorage.setItem('acessToken', data.acessToken);
             localStorage.setItem('userId', data.userId);
-            //console.log('Login successful');
-
+            setLoginError('');
             history(`/home/${data.userId}`);
+            //console.log('Login successful');
         } else {
-            console.error('Invalid login credentials');
+            setLoginError('Login ou senha incorreta');
+            //console.error('Invalid login credentials');
         }
     };
 
