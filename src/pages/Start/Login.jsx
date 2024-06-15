@@ -51,6 +51,7 @@ const Login = () => {
     const [userName, setName] = useState('');
     const [cnpj, setCnpj] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [inputError, setInputError] = useState(false);
 
     const handleRegister = async (event) => {
         event.preventDefault();
@@ -69,10 +70,12 @@ const Login = () => {
         });
 
         if (!response.ok) {
+            setInputError(true);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        //console.log('User created successfully');
+        setInputError(false);
         loginLink();
+        //console.log('User created successfully');
     };
 
 
@@ -140,7 +143,7 @@ const Login = () => {
                         <div className="input-box">
                             <input type="password" placeholder="Confirme sua senha" required value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
                             <FaLock className="icon" />
-                            <p style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>Mínimo 8 caracteres: especial, número, maiúscula e minúscula</p>
+                            <p style={{ color: inputError ? 'red' : 'white', fontSize: 12, marginTop: 4, marginBottom: 4 }}>Mínimo 8 caracteres: especial, número, maiúscula e minúscula</p>
                         </div>
                         <div className="remember-forgot">
                             <label><input type="checkbox" required />
