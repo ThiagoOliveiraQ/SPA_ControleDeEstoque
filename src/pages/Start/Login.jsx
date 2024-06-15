@@ -132,6 +132,7 @@ const Login = () => {
                             <input type="email" placeholder="E-mail" required value={email} onChange={e => setEmail(e.target.value)} />
                             <FaEnvelope className="icon" />
                         </div>
+
                         <div className="input-box">
                             <input type="password" placeholder="Senha" required value={password} onChange={e => setPassword(e.target.value)} />
                             <FaLock className="icon" />
@@ -139,7 +140,7 @@ const Login = () => {
                         <div className="input-box">
                             <input type="password" placeholder="Confirme sua senha" required value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
                             <FaLock className="icon" />
-                            <p style={{ fontSize: 10 }}>A senha deve possuir caractere especial, numero, maiuscula e minuscula</p>
+                            <p style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>Mínimo 8 caracteres: especial, número, maiúscula e minúscula</p>
                         </div>
                         <div className="remember-forgot">
                             <label><input type="checkbox" required />
