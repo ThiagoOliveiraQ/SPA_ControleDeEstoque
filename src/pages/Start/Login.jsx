@@ -46,6 +46,18 @@ const Login = () => {
         }
     };
 
+    function applyCnpjMask(value) {
+        return value
+            // Remove all non-digits
+            .replace(/\D/g, '')
+            // Limit to 14 characters
+            .slice(0, 14)
+            // Add the CNPJ formatting
+            .replace(/(\d{2})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1/$2')
+            .replace(/(\d{4})(\d)/, '$1-$2');
+    }
     // Cadastro
 
     const [userName, setName] = useState('');
@@ -128,7 +140,13 @@ const Login = () => {
                             <FaUser className="icon" />
                         </div>
                         <div className="input-box">
-                            <input type="number" placeholder="Cnpj" required value={cnpj} onChange={e => setCnpj(e.target.value)} />
+                            <input
+                                type="text" // Change type to text to allow formatted input
+                                placeholder="Cnpj"
+                                required
+                                value={cnpj}
+                                onChange={e => setCnpj(applyCnpjMask(e.target.value))}
+                            />
                             <FaIdCard className="icon" />
                         </div>
                         <div className="input-box">
